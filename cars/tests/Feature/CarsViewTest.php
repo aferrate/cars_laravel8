@@ -40,22 +40,22 @@ class CarsViewTest extends TestCase
     public function test_admin_not_logged()
     {
         $response = $this->get('/admin');
-        $response->assertStatus(200);
-        $response->assertSee('User have not permission for this page access.');
+        $response->assertStatus(403);
+        $response->assertSee('User is not logged in.');
     }
 
     public function test_create_not_logged()
     {
         $response = $this->get('/admin/create');
-        $response->assertStatus(200);
-        $response->assertSee('User have not permission for this page access.');
+        $response->assertStatus(403);
+        $response->assertSee('User is not logged in.');
     }
 
     public function test_edit_not_logged()
     {
         $response = $this->get('/admin/edit/34');
-        $response->assertStatus(200);
-        $response->assertSee('User have not permission for this page access.');
+        $response->assertStatus(403);
+        $response->assertSee('User is not logged in.');
     }
 
     public function test_admin()
