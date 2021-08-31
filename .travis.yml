@@ -10,6 +10,7 @@ services:
 
 before_script:
   - cd cars
+  - cp .env.travis .env
   - mysql -e 'CREATE DATABASE laravel;'
   - composer self-update
   - composer install --prefer-source --no-interaction --dev
