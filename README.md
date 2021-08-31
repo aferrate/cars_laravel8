@@ -20,6 +20,7 @@ get into the container:
 install dependencies:
 ```
  composer install
+ npm install
 ```
 
 ### Config repository for read queries
