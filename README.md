@@ -72,7 +72,8 @@ call localhost in your browser:
 ```
  docker-compose exec workspace bash
  php artisan migrate
- php artisan db:seed
+ php artisan db:seed --class=PermissionTableSeeder
+ php artisan db:seed --class=CreateAdminUserSeeder
 ```
 
 
