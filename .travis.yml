@@ -1,0 +1,20 @@
+language: php
+
+dist: bionic
+
+php:
+  - 7.3
+
+services:
+  - mysql
+
+before_script:
+  - cd cars
+  - mysql -e 'CREATE DATABASE laravel;'
+  - composer self-update
+  - composer install --prefer-source --no-interaction --dev
+  - php artisan key:generate
+  - php artisan migrate
+
+script:
+  - phpunit
