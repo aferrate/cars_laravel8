@@ -18,11 +18,11 @@ class PhotoManager implements PhotoManagerInterface
         return true;
     }
 
-    public function uploadCarImage($uploadedFile): string
+    public function uploadCarImage(array $uploadedFile): string
     {
-        $fileName = date('YmdHis').'.'.$uploadedFile->getClientOriginalExtension();
+        $fileName = date('YmdHis').'.'.$uploadedFile['image']->getClientOriginalExtension();
 
-        $img = Image::make($uploadedFile->path());
+        $img = Image::make($uploadedFile['image']->path());
 
         $img->resize(300, 230, function ($constraint) {
             $constraint->aspectRatio();

@@ -71,7 +71,7 @@ class InsertCar
         $fileName = 'no-photo.jpg';
 
         if(isset($input['imageFile'])) {
-            $fileName = $this->photoManager->uploadCarImage($input['imageFile']);
+            $fileName = $this->photoManager->uploadCarImage(['image' => $input['imageFile']]);
         }
 
         return $fileName;

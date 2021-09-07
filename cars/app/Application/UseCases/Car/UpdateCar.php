@@ -68,7 +68,7 @@ class UpdateCar
         if(isset($input['imageFile']) && !isset($input['defImg'])) {
             $this->photoManager->deleteOldPhoto($input['imageFileOld']);
 
-            $fileName = $this->photoManager->uploadCarImage($input['imageFile']);
+            $fileName = $this->photoManager->uploadCarImage(['image' => $input['imageFile']]);
 
             return $fileName;
         }
