@@ -5,12 +5,9 @@ dist: bionic
 php:
   - 7.3
 
-services:
-  - mysql
-
 before_script:
   - cd laradock
-  - docker-compose up -d nginx mysql phpmyadmin
+  - docker-compose up -d nginx mysql
   - docker-compose exec workspace bash
 
 script:
