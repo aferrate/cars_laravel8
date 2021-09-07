@@ -10,10 +10,7 @@ services:
 
 before_script:
   - cd laradock
-  - wsl -d docker-desktop
-  - sysctl -w vm.max_map_count=262144
-  - exit
-  - docker-compose up -d nginx mysql phpmyadmin elasticsearch mailhog rabbitmq redis
+  - docker-compose up -d nginx mysql phpmyadmin
   - docker-compose exec workspace bash
 
 script:
