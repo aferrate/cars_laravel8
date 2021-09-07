@@ -9,6 +9,7 @@ before_script:
   - cd laradock
   - docker-compose up -d nginx mysql
   - docker-compose exec workspace bash
+  - phpunit
 
 script:
-  - phpunit
+  - vendor/bin/phpunit
