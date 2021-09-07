@@ -7,16 +7,14 @@ php:
 
 services:
   - mysql
-  - redis-server
 
 before_script:
-  - cd cars
-  - cp .env.example .env
-  - mysql -e 'CREATE DATABASE laravel;'
-  - composer self-update
-  - composer install
-  - php artisan key:generate
-  - php artisan migrate
+  - cd laradock
+  - wsl -d docker-desktop
+  - sysctl -w vm.max_map_count=262144
+  - exit
+  - docker-compose up -d nginx mysql phpmyadmin elasticsearch mailhog rabbitmq redis
+  - docker-compose exec workspace bash
 
 script:
   - phpunit

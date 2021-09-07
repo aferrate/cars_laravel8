@@ -17,8 +17,9 @@ get into the container:
 ```
  docker-compose exec workspace bash
 ```
-install dependencies:
+install dependencies: (if npm install doesn't work try to install outside docker container)
 ```
+ docker-compose exec workspace bash
  composer install
  npm install
 ```
