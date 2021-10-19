@@ -9,19 +9,24 @@ run docker:
  docker-compose up -d nginx mysql phpmyadmin elasticsearch mailhog rabbitmq redis
 ```
 if elasticsearch container don't start run this commands:
+- windows:
 ```
  wsl -d docker-desktop
  sysctl -w vm.max_map_count=262144
 ```
-get into the container:
+- linux:
 ```
- docker-compose exec workspace bash
+ sysctl -w vm.max_map_count=262144
 ```
 install dependencies: (if npm install doesn't work try to install outside docker container)
 ```
  docker-compose exec workspace bash
  composer install
  npm install
+```
+get into the container:
+```
+ docker-compose exec workspace bash
 ```
 
 ### Config repository for read queries
