@@ -24,6 +24,8 @@ install dependencies: (if npm install doesn't work try to install outside docker
  composer install
  npm install
 ```
+create elasticsearch index for cars:
+- [http://localhost/elasticindexcarsadd](http://localhost/elasticindexcarsadd)
 get into the container:
 ```
  docker-compose exec workspace bash
