@@ -19,8 +19,6 @@ Auth::routes();
 Route::get('/', 'App\Http\Controllers\CarController@index')->name('car.index');
 Route::get('/car/{slug}', 'App\Http\Controllers\CarController@getCarInfo')->name('car.getCarInfo');
 Route::post('/car/search', 'App\Http\Controllers\CarController@searchCars')->name('car.searchCars');
-Route::get('/elasticindexcarsadd', 'App\Http\Controllers\CarController@addElasticIndex')->name('car.addelasticindex');
-Route::get('/elasticindexcarsdelete', 'App\Http\Controllers\CarController@deleteIndexCars')->name('car.deleteelasticindex');
 
 Route::get('/admin', 'App\Http\Controllers\AdminCarController@list')->name('car_admin.list');
 Route::get('/admin/create', 'App\Http\Controllers\AdminCarController@create')->name('car_admin.create');

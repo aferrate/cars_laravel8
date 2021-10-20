@@ -31,18 +31,4 @@ class CarController extends Controller
 
         return $listCarsFiltered->getCarsFiltered($searchParams, false, env('USE_BACKUP_REPO'));
     }
-
-    public function addElasticIndex(AddElasticIndexForCars $addElasticIndexForCars)
-    {
-        $addElasticIndexForCars->createIndexCars();
-
-        return 'elastic index cars added';
-    }
-
-    public function deleteIndexCars(DeleteElasticIndexForCars $deleteElasticIndexForCars)
-    {
-        $deleteElasticIndexForCars->deleteIndexCars();
-
-        return 'elastic index cars deleted';
-    }
 }

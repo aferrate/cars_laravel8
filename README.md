@@ -25,18 +25,32 @@ install dependencies: (if npm install doesn't work try to install outside docker
  npm install
 ```
 
-create elasticsearch index for cars:
-- [http://localhost/elasticindexcarsadd](http://localhost/elasticindexcarsadd)
-
-get into the container:
+create database:
 ```
  docker-compose exec workspace bash
+ php artisan db:create laravel_cars
 ```
+
+add elasticsearch index cars:
+```
+ docker-compose exec workspace bash
+ php artisan elasticsearchindexadd:cars
+```
+
+run migrations and seeders:
+```
+ docker-compose exec workspace bash
+ php artisan migrate
+ php artisan db:seed --class=PermissionTableSeeder
+ php artisan db:seed --class=CreateAdminUserSeeder
+```
+
 
 ### Config repository for read queries
 
 edit cars/.env and change the value of key USE_BACKUP_REPO
 if false read queries from mysql if true from elasticsearch
+
 
 ### Start application
 
@@ -77,13 +91,10 @@ call localhost in your browser:
 ```
 
 
-### Run migrations and seeders
-
+### Access container
+get into the container:
 ```
  docker-compose exec workspace bash
- php artisan migrate
- php artisan db:seed --class=PermissionTableSeeder
- php artisan db:seed --class=CreateAdminUserSeeder
 ```
 
 
@@ -92,4 +103,12 @@ call localhost in your browser:
 ```
 test1@test.com
 123456
+```
+
+
+### Delete elasticsearch index cars
+
+```
+ docker-compose exec workspace bash
+ php artisan elasticsearchindexdelete:cars
 ```
