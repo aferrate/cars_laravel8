@@ -1,5 +1,4 @@
 <?php
-
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -17,26 +16,26 @@ class CreateAdminUserSeeder extends Seeder
     public function run()
     {
         $user = User::create([
-        	'name' => 'test1',
-        	'email' => 'test1@test.com',
-        	'password' => bcrypt('123456')
+            'name' => 'test1',
+            'email' => 'test1@test.com',
+            'password' => bcrypt('123456')
         ]);
-        
+
         $role = Role::create(['name' => 'Admin']);
-        $permissions = Permission::pluck('id','id')->all();
-        
+        $permissions = Permission::pluck('id', 'id')->all();
+
         $role->syncPermissions($permissions);
         $user->assignRole([$role->id]);
 
         $user = User::create([
-        	'name' => 'test2',
-        	'email' => 'test2@test.com',
-        	'password' => bcrypt('123456')
+            'name' => 'test2',
+            'email' => 'test2@test.com',
+            'password' => bcrypt('123456')
         ]);
-        
+
         $role = Role::create(['name' => 'User']);
         $permissions = [];
-        
+
         $role->syncPermissions($permissions);
         $user->assignRole([$role->id]);
     }

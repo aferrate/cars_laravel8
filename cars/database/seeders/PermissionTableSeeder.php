@@ -1,5 +1,4 @@
 <?php
-
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -28,7 +27,7 @@ class PermissionTableSeeder extends Seeder
             'admincar-edit',
             'admincar-delete'
         ];
- 
+
         foreach ($permissions as $permission) {
             Permission::create(['name' => $permission]);
         }
