@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 Auth::routes();
 
 Route::get('/', 'App\Http\Controllers\CarController@index')->name('car.index');
@@ -28,7 +27,7 @@ Route::put('/admin/update/{id}', 'App\Http\Controllers\AdminCarController@update
 Route::post('/admin/delete', 'App\Http\Controllers\AdminCarController@delete')->name('car_admin.delete');
 Route::post('/admin/search', 'App\Http\Controllers\AdminCarController@searchCars')->name('car_admin.searchCars');
 
-Route::group(['middleware' => ['auth']], function() {
-    Route::resource('roles','App\Http\Controllers\RoleController');
-    Route::resource('users','App\Http\Controllers\UserController');
+Route::group(['middleware' => ['auth']], function () {
+    Route::resource('roles', 'App\Http\Controllers\RoleController');
+    Route::resource('users', 'App\Http\Controllers\UserController');
 });
