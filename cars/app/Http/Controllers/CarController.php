@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -23,7 +22,7 @@ class CarController extends Controller
 
     public function searchCars(ListCarsFiltered $listCarsFiltered, Request $request)
     {
-        $search = ($request->post('search')!='') ? $request->post('search') : '';
+        $search = ($request->post('search') != '') ? $request->post('search') : '';
 
         $searchParams = [];
         $searchParams['search'] = $search;

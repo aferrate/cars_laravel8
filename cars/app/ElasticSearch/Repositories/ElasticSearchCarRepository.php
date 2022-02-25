@@ -1,5 +1,4 @@
 <?php
-
 namespace App\ElasticSearch\Repositories;
 
 use App\Domain\Repository\CarRepositoryBackupInterface;
@@ -29,7 +28,7 @@ class ElasticSearchCarRepository implements CarRepositoryBackupInterface
 
         $params = [
             'index' => 'cars',
-            'body'  => [
+            'body' => [
                 'query' => [
                     'match' => [
                         'enabled' => true
@@ -38,10 +37,10 @@ class ElasticSearchCarRepository implements CarRepositoryBackupInterface
             ]
         ];
         $params['sort'] = ['id:desc'];
-        
+
         $carsElastic = $this->getClient()->search($params);
 
-        foreach($carsElastic['hits']['hits'] as $car) {
+        foreach ($carsElastic['hits']['hits'] as $car) {
             $cars[] = $car['_source'];
         }
 
@@ -54,13 +53,13 @@ class ElasticSearchCarRepository implements CarRepositoryBackupInterface
 
         $params = ['index' => 'cars'];
         $params['sort'] = ['id:desc'];
-        
+
         $carsElastic = $this->getClient()->search($params);
 
-        foreach($carsElastic['hits']['hits'] as $car) {
+        foreach ($carsElastic['hits']['hits'] as $car) {
             $cars[] = $car['_source'];
         }
-        
+
         return $cars;
     }
 
@@ -69,13 +68,13 @@ class ElasticSearchCarRepository implements CarRepositoryBackupInterface
         $cars = [];
         $filter = $criteria->getFilters();
 
-        if(!$isAdmin) {
+        if (!$isAdmin) {
             $filter['bool']['must'][] = ['term' => ['enabled' => ['value' => true]]];
         }
 
         $params = [
             'index' => 'cars',
-            'body'  => [
+            'body' => [
                 'query' => $filter
             ]
         ];
@@ -83,10 +82,10 @@ class ElasticSearchCarRepository implements CarRepositoryBackupInterface
 
         $carsElastic = $this->getClient()->search($params);
 
-        foreach($carsElastic['hits']['hits'] as $car) {
+        foreach ($carsElastic['hits']['hits'] as $car) {
             $cars[] = $car['_source'];
         }
-        
+
         return $cars;
     }
 
@@ -94,7 +93,7 @@ class ElasticSearchCarRepository implements CarRepositoryBackupInterface
     {
         $params = [
             'index' => 'cars',
-            'body'  => [
+            'body' => [
                 'query' => [
                     'match' => [
                         'id' => $id
@@ -105,7 +104,7 @@ class ElasticSearchCarRepository implements CarRepositoryBackupInterface
 
         $carElastic = $this->getClient()->search($params);
 
-        if(empty($carElastic['hits']['hits'])) {
+        if (empty($carElastic['hits']['hits'])) {
             $car = new Car();
             $car->setId(0);
 
@@ -121,7 +120,7 @@ class ElasticSearchCarRepository implements CarRepositoryBackupInterface
     {
         $params = [
             'index' => 'cars',
-            'body'  => [
+            'body' => [
                 'query' => [
                     'match' => [
                         'slug' => $slug
@@ -132,7 +131,7 @@ class ElasticSearchCarRepository implements CarRepositoryBackupInterface
 
         $carElastic = $this->getClient()->search($params);
 
-        if(empty($carElastic['hits']['hits'])) {
+        if (empty($carElastic['hits']['hits'])) {
             $car = new Car();
             $car->setId(0);
 
@@ -148,8 +147,8 @@ class ElasticSearchCarRepository implements CarRepositoryBackupInterface
     {
         $params = [
             'index' => 'cars',
-            'id'    => $car->getId(),
-            'body'  => [
+            'id' => $car->getId(),
+            'body' => [
                 'id' => $car->getId(),
                 'author_id' => $car->getAuthorId(),
                 'mark' => $car->getMark(),
@@ -173,8 +172,8 @@ class ElasticSearchCarRepository implements CarRepositoryBackupInterface
     {
         $params = [
             'index' => 'cars',
-            'id'    => $car->getId(),
-            'body'  => [
+            'id' => $car->getId(),
+            'body' => [
                 'doc' => [
                     'id' => $car->getId(),
                     'author_id' => $car->getAuthorId(),
@@ -190,7 +189,7 @@ class ElasticSearchCarRepository implements CarRepositoryBackupInterface
                 ]
             ]
         ];
-        
+
         $this->getClient()->update($params);
     }
 
@@ -198,9 +197,9 @@ class ElasticSearchCarRepository implements CarRepositoryBackupInterface
     {
         $params = [
             'index' => 'cars',
-            'id'    => $carId
+            'id' => $carId
         ];
-        
+
         $this->getClient()->delete($params);
     }
 
@@ -215,68 +214,68 @@ class ElasticSearchCarRepository implements CarRepositoryBackupInterface
                 ],
                 'mappings' => [
                     '_source' => [
-                    'enabled' => true
+                        'enabled' => true
                     ],
                     'properties' => [
                         'id' => [
-                              'type' => 'integer',
-                              'index' => 'true'
+                            'type' => 'integer',
+                            'index' => 'true'
                         ],
                         'author_id' => [
-                              'type' => 'integer',
-                              'index' => 'true'
+                            'type' => 'integer',
+                            'index' => 'true'
                         ],
                         'mark' => [
-                              'type' => 'keyword',
-                              'index' => 'true',
+                            'type' => 'keyword',
+                            'index' => 'true',
                         ],
                         'model' => [
-                              'type' => 'keyword',
-                              'index' => 'true',
+                            'type' => 'keyword',
+                            'index' => 'true',
                         ],
                         'year' => [
-                              'type' => 'integer',
-                              'index' => 'true',
+                            'type' => 'integer',
+                            'index' => 'true',
                         ],
                         'description' => [
-                              'type' => 'text',
-                              'index' => 'true',
+                            'type' => 'text',
+                            'index' => 'true',
                         ],
                         'slug' => [
-                              'type' => 'text',
-                              'index' => 'true',
+                            'type' => 'text',
+                            'index' => 'true',
                         ],
                         'enabled' => [
-                              'type' => 'boolean',
-                              'index' => 'true',
+                            'type' => 'boolean',
+                            'index' => 'true',
                         ],
                         'created_at' => [
-                              'type' => 'date',
-                              'format' => 'yyyy-MM-dd HH:mm:ss',
-                              'index' => 'true',
+                            'type' => 'date',
+                            'format' => 'yyyy-MM-dd HH:mm:ss',
+                            'index' => 'true',
                         ],
                         'updated_at' => [
-                              'type' => 'date',
-                              'format' => 'yyyy-MM-dd HH:mm:ss',
-                              'index' => 'true',
+                            'type' => 'date',
+                            'format' => 'yyyy-MM-dd HH:mm:ss',
+                            'index' => 'true',
                         ],
                         'country' => [
-                              'type' => 'text',
-                              'index' => 'true',
+                            'type' => 'text',
+                            'index' => 'true',
                         ],
                         'city' => [
-                              'type' => 'text',
-                              'index' => 'true',
+                            'type' => 'text',
+                            'index' => 'true',
                         ],
                         'image_filename' => [
-                              'type' => 'text',
-                              'index' => 'true',
+                            'type' => 'text',
+                            'index' => 'true',
                         ]
-                    ]   
+                    ]
                 ]
             ]
         ];
-      
+
         $this->getClient()->indices()->create($params);
     }
 

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Eloquent;
 
 class TranslateFilterEloquent
@@ -10,21 +9,21 @@ class TranslateFilterEloquent
 
         switch ($field) {
             case 'mark':
-                if($stringToSearch !== '') {
+                if ($stringToSearch !== '') {
                     $filter[] = 'mark LIKE \'%' . $stringToSearch . '%\'';
                 }
 
                 break;
             case 'model':
-                if($stringToSearch !== '') {
+                if ($stringToSearch !== '') {
                     $filter[] = 'model LIKE \'%' . $stringToSearch . '%\'';
                 }
 
                 break;
             case 'year':
-                if($stringToSearch !== '') {
+                if ($stringToSearch !== '') {
                     $stringToSearch = (is_numeric($stringToSearch)) ? $stringToSearch : '-1';
-                    $filter[] = 'year ='. $stringToSearch .'';
+                    $filter[] = 'year =' . $stringToSearch . '';
                 }
 
                 break;

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -22,11 +21,11 @@ class RoleController extends Controller
      *
      * @return void
      */
-    function __construct()
+    public function __construct()
     {
-        $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','show']]);
-        $this->middleware('permission:role-create', ['only' => ['create','store']]);
-        $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index', 'show']]);
+        $this->middleware('permission:role-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:role-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:role-delete', ['only' => ['destroy']]);
     }
 
@@ -67,10 +66,10 @@ class RoleController extends Controller
             'name' => 'required|unique:roles,name',
             'permission' => 'required',
         ]);
-        
+
         $insertRole->inserRole(['name' => $request->input('name'), 'permission' => $request->input('permission')]);
 
-        return redirect()->route('roles.index')->with('success','Role created successfully');
+        return redirect()->route('roles.index')->with('success', 'Role created successfully');
     }
 
     /**
@@ -85,7 +84,7 @@ class RoleController extends Controller
         $role = $result['role'];
         $rolePermissions = $result['rolePermissions'];
 
-        return view('roles.show', compact('role','rolePermissions'));
+        return view('roles.show', compact('role', 'rolePermissions'));
     }
 
     /**
@@ -101,7 +100,7 @@ class RoleController extends Controller
         $permissions = $result['permissions'];
         $rolePermissions = $result['permissionsArray'];
 
-        return view('roles.edit', compact('role','permissions','rolePermissions'));
+        return view('roles.edit', compact('role', 'permissions', 'rolePermissions'));
     }
 
     /**
@@ -120,7 +119,7 @@ class RoleController extends Controller
 
         $updateRole->update(['name' => $request->input('name'), 'permission' => $request->input('permission')], $id);
 
-        return redirect()->route('roles.index')->with('success','Role updated successfully');
+        return redirect()->route('roles.index')->with('success', 'Role updated successfully');
     }
 
     /**
@@ -133,7 +132,7 @@ class RoleController extends Controller
     {
         $deleteRole->delete($id);
 
-        return redirect()->route('roles.index')->with('success','Role deleted successfully');
+        return redirect()->route('roles.index')->with('success', 'Role deleted successfully');
     }
 
     /**

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -21,9 +20,9 @@ class AdminCarController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('permission:admincar-list|admincar-create|admincar-edit|admincar-delete', ['only' => ['list','searchCars']]);
-        $this->middleware('permission:admincar-create', ['only' => ['create','store']]);
-        $this->middleware('permission:admincar-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:admincar-list|admincar-create|admincar-edit|admincar-delete', ['only' => ['list', 'searchCars']]);
+        $this->middleware('permission:admincar-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:admincar-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:admincar-delete', ['only' => ['delete']]);
     }
 
@@ -42,7 +41,7 @@ class AdminCarController extends Controller
         $this->validateFormFields(request());
 
         $insertCar->insert($request->all(), Auth::id());
-        
+
         return redirect('admin');
     }
 
@@ -54,7 +53,7 @@ class AdminCarController extends Controller
     public function update(UpdateCar $updateCar, Request $request, int $id)
     {
         $this->validateFormFields(request());
-        
+
         $updateCar->update($request->all(), Auth::id(), $id);
 
         return redirect('admin');
@@ -67,7 +66,7 @@ class AdminCarController extends Controller
 
     public function searchCars(ListCarsFiltered $listCarsFiltered, Request $request)
     {
-        $search = ($request->post('search')!='') ? $request->post('search') : '';
+        $search = ($request->post('search') != '') ? $request->post('search') : '';
 
         $searchParams = [];
         $searchParams['search'] = $search;

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\ElasticSearch;
 
 class TranslateFilterElasticSearch
@@ -8,8 +7,8 @@ class TranslateFilterElasticSearch
     {
         switch ($field) {
             case 'mark':
-                if($stringToSearch !== '') {
-                    $search = '*'.$stringToSearch.'*';
+                if ($stringToSearch !== '') {
+                    $search = '*' . $stringToSearch . '*';
                 } else {
                     $search = '*';
                 }
@@ -22,8 +21,8 @@ class TranslateFilterElasticSearch
 
                 break;
             case 'model':
-                if($stringToSearch !== '') {
-                    $search = '*'.$stringToSearch.'*';
+                if ($stringToSearch !== '') {
+                    $search = '*' . $stringToSearch . '*';
                 } else {
                     $search = '*';
                 }
@@ -36,7 +35,7 @@ class TranslateFilterElasticSearch
 
                 break;
             case 'year':
-                if($stringToSearch !== '') {
+                if ($stringToSearch !== '') {
                     $stringToSearch = (is_numeric($stringToSearch)) ? $stringToSearch : '-1';
 
                     $filter2 = [

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Eloquent\Repositories;
 
 use App\Domain\Repository\PermissionRepositoryInterface;
@@ -17,8 +16,8 @@ class EloquentPermissionRepository implements PermissionRepositoryInterface
 
     public function getRolePermissions(int $id): array
     {
-        $permissionsEntity = Permission::join("role_has_permissions","role_has_permissions.permission_id","=","permissions.id")
-            ->where("role_has_permissions.role_id",$id)->get();
+        $permissionsEntity = Permission::join('role_has_permissions', 'role_has_permissions.permission_id', '=', 'permissions.id')
+            ->where('role_has_permissions.role_id', $id)->get();
 
         $permissions = $this->returnPermissionsDomain($permissionsEntity);
 
@@ -27,15 +26,15 @@ class EloquentPermissionRepository implements PermissionRepositoryInterface
 
     public function getArrayRolePermissions(int $id): array
     {
-        return DB::table("role_has_permissions")->where("role_has_permissions.role_id",$id)
-            ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')->all();
+        return DB::table('role_has_permissions')->where('role_has_permissions.role_id', $id)
+            ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')->all();
     }
 
     private function returnPermissionsDomain(Collection $permissionsEntity)
     {
         $permissions = [];
 
-        foreach($permissionsEntity as $permissionEntity) {
+        foreach ($permissionsEntity as $permissionEntity) {
             $permission = new PermissionDomain();
             $permission->setId($permissionEntity->id);
             $permission->setName($permissionEntity->name);

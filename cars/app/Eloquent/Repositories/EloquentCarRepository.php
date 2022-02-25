@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Eloquent\Repositories;
 
 use App\Domain\Repository\CarRepositoryInterface;
@@ -36,7 +35,7 @@ class EloquentCarRepository implements CarRepositoryInterface
             ->get()
             ->toArray()
         ;
-        
+
         return $cars;
     }
 
@@ -44,7 +43,7 @@ class EloquentCarRepository implements CarRepositoryInterface
     {
         $whereRawSQL = '';
 
-        if($criteria->hasFilters()) {
+        if ($criteria->hasFilters()) {
             $filters = $criteria->getFilters();
 
             foreach ($filters as $filter) {
@@ -52,19 +51,19 @@ class EloquentCarRepository implements CarRepositoryInterface
             }
         }
 
-        if(!$isAdmin) {
-            $prefix = ($whereRawSQL == '') ? ' ': ' and ';
-            $whereRawSQL .= $prefix.'enabled = 1'; 
+        if (!$isAdmin) {
+            $prefix = ($whereRawSQL == '') ? ' ' : ' and ';
+            $whereRawSQL .= $prefix . 'enabled = 1';
         }
 
         $carsModel = $this->carModel->selectRaw('*');
 
-        if($whereRawSQL !== '') {
+        if ($whereRawSQL !== '') {
             $carsModel = $carsModel->whereRaw($whereRawSQL);
         }
-        
+
         $cars = $carsModel->orderByRaw(($criteria->getOrder() == 'desc') ? 'id desc' : 'id asc')->get()->toArray();
-        
+
         return $cars;
     }
 
@@ -72,7 +71,7 @@ class EloquentCarRepository implements CarRepositoryInterface
     {
         $carModel = $this->carModel->firstWhere('id', $id);
 
-        if(is_null($carModel)) {
+        if (is_null($carModel)) {
             $car = new Car();
             $car->setId(0);
 
@@ -86,7 +85,7 @@ class EloquentCarRepository implements CarRepositoryInterface
     {
         $carModel = $this->carModel->firstWhere('slug', $slug);
 
-        if(is_null($carModel)) {
+        if (is_null($carModel)) {
             $car = new Car();
             $car->setId(0);
 

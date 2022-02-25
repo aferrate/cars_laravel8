@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Eloquent\Repositories;
 
 use App\Domain\Repository\RoleRepositoryInterface;
@@ -12,9 +11,9 @@ class EloquentRoleRepository implements RoleRepositoryInterface
     public function getAllRoles(): array
     {
         $roles = [];
-        $rolesEntity = Role::orderBy('id','DESC')->get();
+        $rolesEntity = Role::orderBy('id', 'DESC')->get();
 
-        foreach($rolesEntity as $roleEntity) {
+        foreach ($rolesEntity as $roleEntity) {
             $role = new RoleDomain();
             $role->setId($roleEntity->id);
             $role->setName($roleEntity->name);
@@ -51,11 +50,11 @@ class EloquentRoleRepository implements RoleRepositoryInterface
 
     public function deleteRole(int $id): void
     {
-        DB::table("roles")->where('id',$id)->delete();
+        DB::table('roles')->where('id', $id)->delete();
     }
 
     public function getAllRoleNames(): array
     {
-        return Role::pluck('name','name')->all();
+        return Role::pluck('name', 'name')->all();
     }
 }

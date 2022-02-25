@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -14,7 +13,7 @@ use App\Application\UseCases\User\DeleteUser;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
-    
+
 class UserController extends Controller
 {
     /**
@@ -24,9 +23,9 @@ class UserController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('permission:user-list|user-create|user-edit|user-delete', ['only' => ['index','show']]);
-        $this->middleware('permission:user-create', ['only' => ['create','store']]);
-        $this->middleware('permission:user-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:user-list|user-create|user-edit|user-delete', ['only' => ['index', 'show']]);
+        $this->middleware('permission:user-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:user-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:user-delete', ['only' => ['destroy']]);
     }
 
@@ -40,7 +39,7 @@ class UserController extends Controller
         $users = $getAllUsers->getAllUsers();
         $users = $this->paginate($users);
 
-        return view('users.index',compact('users'));
+        return view('users.index', compact('users'));
     }
 
     /**
@@ -52,7 +51,7 @@ class UserController extends Controller
     {
         $roles = $getCreateInfoUser->getAllRoleNames();
 
-        return view('users.create',compact('roles'));
+        return view('users.create', compact('roles'));
     }
 
     /**
@@ -73,7 +72,7 @@ class UserController extends Controller
         $input = $request->all();
         $insertUser->insertUser($input);
 
-        return redirect()->route('users.index')->with('success','User created successfully');
+        return redirect()->route('users.index')->with('success', 'User created successfully');
     }
 
     /**
@@ -86,7 +85,7 @@ class UserController extends Controller
     {
         $user = $getUserInfo->getUserInfo($id);
 
-        return view('users.show',compact('user'));
+        return view('users.show', compact('user'));
     }
 
     /**
@@ -102,7 +101,7 @@ class UserController extends Controller
         $roles = $result['roles'];
         $userRole = $result['userRole'];
 
-        return view('users.edit',compact('user','roles','userRole'));
+        return view('users.edit', compact('user', 'roles', 'userRole'));
     }
 
     /**
@@ -116,14 +115,14 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$id,
+            'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'same:confirm-password',
             'roles' => 'required'
         ]);
 
         $updateUser->update($request->all(), $id);
 
-        return redirect()->route('users.index')->with('success','User updated successfully');
+        return redirect()->route('users.index')->with('success', 'User updated successfully');
     }
 
     /**
@@ -136,7 +135,7 @@ class UserController extends Controller
     {
         $deleteUser->delete($id);
 
-        return redirect()->route('users.index')->with('success','User deleted successfully');
+        return redirect()->route('users.index')->with('success', 'User deleted successfully');
     }
 
     /**

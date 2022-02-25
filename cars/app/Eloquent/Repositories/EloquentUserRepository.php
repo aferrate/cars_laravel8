@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Eloquent\Repositories;
 
 use App\Domain\Repository\UserRepositoryInterface;
@@ -13,9 +12,9 @@ class EloquentUserRepository implements UserRepositoryInterface
     public function getAllUsers(): array
     {
         $users = [];
-        $usersEntity = User::orderBy('id','DESC')->get();
+        $usersEntity = User::orderBy('id', 'DESC')->get();
 
-        foreach($usersEntity as $userEntity) {
+        foreach ($usersEntity as $userEntity) {
             $user = new UserDomain();
             $user->setId($userEntity->id);
             $user->setName($userEntity->name);
@@ -50,7 +49,7 @@ class EloquentUserRepository implements UserRepositoryInterface
 
     public function updateUser(array $input, int $id): void
     {
-        if(!empty($input['password'])) {
+        if (!empty($input['password'])) {
             $input['password'] = Hash::make($input['password']);
         } else {
             unset($input['password']);
