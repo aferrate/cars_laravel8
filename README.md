@@ -22,7 +22,7 @@ install dependencies: (if npm install doesn't work try to install outside docker
 ```
  docker-compose exec workspace bash
  composer install
- npm install
+ npm install --no-bin-links
 ```
 
 create database:
