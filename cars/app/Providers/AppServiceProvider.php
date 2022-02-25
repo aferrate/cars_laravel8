@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
@@ -21,7 +20,7 @@ class AppServiceProvider extends ServiceProvider
         );
         $this->app->bind(
             Client::class,
-            function($app) {
+            function ($app) {
                 return ClientBuilder::create()->setHosts(['host' => 'elasticsearch:9200'])->build();
             }
         );

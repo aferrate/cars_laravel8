@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Services\Mail;
 
 use App\Domain\Mail\SendMailInterface;

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Services\Cache;
 
 use App\Domain\Cache\CacheInterface;
@@ -15,8 +14,8 @@ class CacheRedis implements CacheInterface
     public function getIndexCars(string $key): string
     {
         $cars = Redis::get($key);
-        
-        if(!empty($cars)) {
+
+        if (!empty($cars)) {
             return $cars;
         }
 
