@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Application\UseCases\Car;
 
 use App\Domain\Criteria\Criteria;
@@ -27,20 +26,22 @@ class ListCarsFiltered
      */
     public function getCarsFiltered(array $searchParams, bool $isAdmin, bool $backupEnabled): string
     {
-        if($backupEnabled) {
-            $criteria = new Criteria($this->carRepositoryBackup->translateFilter(
-                    $searchParams['field'],
-                    $searchParams['search']
-                ),
+        if ($backupEnabled) {
+            $criteria = new Criteria(
+                $this->carRepositoryBackup->translateFilter(
+                $searchParams['field'],
+                $searchParams['search']
+            ),
                 'desc'
             );
 
             $cars = $this->carRepositoryBackup->searchByCriteria($criteria, $isAdmin);
         } else {
-            $criteria = new Criteria($this->carRepository->translateFilter(
-                    $searchParams['field'],
-                    $searchParams['search']
-                ),
+            $criteria = new Criteria(
+                $this->carRepository->translateFilter(
+                $searchParams['field'],
+                $searchParams['search']
+            ),
                 'desc'
             );
 

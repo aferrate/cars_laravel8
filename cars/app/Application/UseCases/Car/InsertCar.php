@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Application\UseCases\Car;
 
 use App\Domain\Repository\CarRepositoryInterface;
@@ -27,8 +26,7 @@ class InsertCar
         CarRepositoryBackupInterface $carRepositoryBackup,
         PhotoManagerInterface $photoManager,
         CarCreatedEvent $carCreatedEvent
-    )
-    {
+    ) {
         $this->carRepository = $carRepository;
         $this->carRepositoryBackup = $carRepositoryBackup;
         $this->photoManager = $photoManager;
@@ -70,7 +68,7 @@ class InsertCar
     {
         $fileName = 'no-photo.jpg';
 
-        if(isset($input['imageFile'])) {
+        if (isset($input['imageFile'])) {
             $fileName = $this->photoManager->uploadCarImage(['image' => $input['imageFile']]);
         }
 

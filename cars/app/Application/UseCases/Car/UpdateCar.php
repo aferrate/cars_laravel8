@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Application\UseCases\Car;
 
 use App\Domain\Model\Car;
@@ -27,8 +26,7 @@ class UpdateCar
         CarRepositoryBackupInterface $carRepositoryBackup,
         PhotoManagerInterface $photoManager,
         CarUpdatedEvent $carUpdatedEvent
-    )
-    {
+    ) {
         $this->carRepository = $carRepository;
         $this->carRepositoryBackup = $carRepositoryBackup;
         $this->photoManager = $photoManager;
@@ -65,7 +63,7 @@ class UpdateCar
 
     private function managePhoto(array $input)
     {
-        if(isset($input['imageFile']) && !isset($input['defImg'])) {
+        if (isset($input['imageFile']) && !isset($input['defImg'])) {
             $this->photoManager->deleteOldPhoto($input['imageFileOld']);
 
             $fileName = $this->photoManager->uploadCarImage(['image' => $input['imageFile']]);
@@ -73,7 +71,7 @@ class UpdateCar
             return $fileName;
         }
 
-        if(isset($input['defImg'])) {
+        if (isset($input['defImg'])) {
             $this->photoManager->deleteOldPhoto($input['imageFileOld']);
         }
 

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Application\UseCases\Car;
 
 use App\Domain\Model\Car;

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Application\UseCases\User;
 
 use App\Domain\Repository\RoleRepositoryInterface;

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Application\UseCases\Car;
 
 use App\Domain\Model\Car;
@@ -26,8 +25,7 @@ class DeleteCar
         CarRepositoryBackupInterface $carRepositoryBackup,
         PhotoManagerInterface $photoManager,
         CarDeletedEvent $carDeletedEvent
-    )
-    {
+    ) {
         $this->carRepository = $carRepository;
         $this->carRepositoryBackup = $carRepositoryBackup;
         $this->photoManager = $photoManager;

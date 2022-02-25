@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Application\UseCases\Car;
 
 use App\Domain\Repository\CarRepositoryInterface;
@@ -21,8 +20,7 @@ class ListAllCarsEnabled
         CarRepositoryInterface $carRepository,
         CarRepositoryBackupInterface $carRepositoryBackup,
         CacheInterface $cache
-    )
-    {
+    ) {
         $this->carRepository = $carRepository;
         $this->carRepositoryBackup = $carRepositoryBackup;
         $this->cache = $cache;
@@ -35,7 +33,7 @@ class ListAllCarsEnabled
     {
         $cacheCars = $this->cache->getIndexCars('cars');
 
-        if(!empty($cacheCars)) {
+        if (!empty($cacheCars)) {
             return $cacheCars;
         }
 
