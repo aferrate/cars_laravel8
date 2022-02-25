@@ -1,4 +1,4 @@
-FROM rabbitmq:3.8-alpine
+FROM rabbitmq:alpine
 
 LABEL maintainer="Mahmoud Zalt <mahmoud@zalt.me>"
 

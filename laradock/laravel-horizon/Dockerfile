@@ -5,7 +5,7 @@
 #
 
 ARG LARADOCK_PHP_VERSION
-FROM php:${LARADOCK_PHP_VERSION}-alpine
+FROM php:${LARADOCK_PHP_VERSION}-alpine3.13
 
 LABEL maintainer="Mahmoud Zalt <mahmoud@zalt.me>"
 
@@ -64,12 +64,16 @@ ARG INSTALL_GNUPG=false
 RUN set -eux; if [ ${INSTALL_GNUPG} = true ]; then \
       apk add --no-cache --no-progress --virtual BUILD_DEPS_PHP_GNUPG gpgme-dev; \
       apk add --no-cache --no-progress gpgme; \
-      if [ $(php -r "echo PHP_MAJOR_VERSION;") = "8" ]; then \
-        pecl install gnupg-1.5.0RC2; \
-      else \
-        pecl install gnupg; \
-      fi; \
+      pecl install gnupg; \
       docker-php-ext-enable gnupg; \
+    fi
+
+#Install LDAP
+ARG INSTALL_LDAP=false;
+RUN set -eux; if [ ${INSTALL_LDAP} = true ]; then \
+      apk add --no-cache --no-progress openldap-dev; \
+      docker-php-ext-install ldap; \
+      php -m | grep -oiE '^ldap$'; \
     fi
 
 #Install GD package:
