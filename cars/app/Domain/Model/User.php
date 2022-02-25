@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Domain\Model;
 
 final class User

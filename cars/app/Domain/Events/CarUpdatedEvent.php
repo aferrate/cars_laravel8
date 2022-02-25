@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Domain\Events;
 
 use App\Domain\Repository\UserRepositoryInterface;
@@ -19,11 +18,11 @@ class CarUpdatedEvent
         $msg = "Car updated with id $id.";
         $subject = 'Car updated';
 
-        foreach($users as $user) {
-            $payload = '{"id":"'.$id.'", "email":"'.$user.'", "subject":"'.$subject.'", "message":"'.$msg.'"}';
+        foreach ($users as $user) {
+            $payload = '{"id":"' . $id . '", "email":"' . $user . '", "subject":"' . $subject . '", "message":"' . $msg . '"}';
             $this->queueInterface->publish($payload);
         }
-        
+
         $this->queueInterface->consume();
     }
 }
