@@ -18,9 +18,8 @@ class EloquentCarRepository implements CarRepositoryInterface
 
     public function findAllEnabled(int $limit = 0, int $offset = 0): array
     {
-        $cars = $this->carModel->selectRaw('*')
-            ->whereRaw('enabled = 1')
-            ->orderByRaw('id desc')
+        $cars = CarEntity::where('enabled', 1)
+            ->orderByDesc('id')
             ->get()
             ->toArray()
         ;
@@ -30,8 +29,8 @@ class EloquentCarRepository implements CarRepositoryInterface
 
     public function findAll(): array
     {
-        $cars = $this->carModel->selectRaw('*')
-            ->orderByRaw('id desc')
+        $cars = CarEntity::where('enabled', 1)
+            ->orderByDesc('id')
             ->get()
             ->toArray()
         ;
