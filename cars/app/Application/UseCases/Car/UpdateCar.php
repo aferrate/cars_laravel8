@@ -61,7 +61,7 @@ class UpdateCar
         return true;
     }
 
-    private function managePhoto(array $input)
+    private function managePhoto(array $input): string
     {
         if (isset($input['imageFile']) && !isset($input['defImg'])) {
             $this->photoManager->deleteOldPhoto($input['imageFileOld']);

@@ -28,6 +28,7 @@ class GetEditInfoUser
         $user = $this->userRepository->findUserById($id);
         $roles = $this->roleRepository->getAllRoleNames();
         $userRole = $user->getRoleNames();
+        
         return [
             'user' => $user,
             'roles' => $roles,

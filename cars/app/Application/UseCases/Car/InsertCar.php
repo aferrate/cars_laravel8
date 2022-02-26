@@ -64,7 +64,7 @@ class InsertCar
         return true;
     }
 
-    private function managePhoto(array $input)
+    private function managePhoto(array $input): string
     {
         $fileName = 'no-photo.jpg';
 

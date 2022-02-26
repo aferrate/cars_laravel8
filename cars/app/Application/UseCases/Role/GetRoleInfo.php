@@ -28,6 +28,6 @@ class GetRoleInfo
         $role = $this->roleRepository->findRoleById($id);
         $rolePermissions = $this->permissionRepository->getRolePermissions($id);
 
-        return ['role' => $role, 'rolePermissions' => $rolePermissions, ];
+        return ['role' => $role, 'rolePermissions' => $rolePermissions];
     }
 }
