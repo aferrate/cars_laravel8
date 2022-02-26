@@ -12,7 +12,7 @@ class CarCreatedEvent
         $this->queueInterface = $queueInterface;
     }
 
-    public function raise(int $id)
+    public function raise(int $id): void
     {
         $users = $this->userRepositoryInterface->getEmailUsers();
         $msg = "Car created with id $id.";
