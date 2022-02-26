@@ -1,32 +1,26 @@
 <?php
 namespace App\Application\UseCases\Car;
 
-use App\Domain\Repository\CarRepositoryInterface;
-use App\Domain\Repository\CarRepositoryBackupInterface;
+use App\Domain\Factory\RepoCarFactory;
 
 class ListAllCars
 {
     private $carRepository;
-    private $carRepositoryBackup;
 
     /**
      * GetCarInfo constructor.
-     * @param $carRepository
-     * @param $carRepositoryBackup
+     * @param $repoCarFactory
      */
-    public function __construct(CarRepositoryInterface $carRepository, CarRepositoryBackupInterface $carRepositoryBackup)
+    public function __construct(RepoCarFactory $repoCarFactory)
     {
-        $this->carRepository = $carRepository;
-        $this->carRepositoryBackup = $carRepositoryBackup;
+        $this->carRepository = $repoCarFactory->makeRepoCar();
     }
 
     /**
      * @return array
      */
-    public function findAllCars(bool $backupEnabled): string
+    public function findAllCars(): string
     {
-        $cars = ($backupEnabled) ? $this->carRepositoryBackup->findAll() : $this->carRepository->findAll();
-
-        return json_encode($cars);
+        return json_encode($this->carRepository->findAll());
     }
 }

@@ -2,7 +2,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Http\RedirectResponse ;
+use Illuminate\View\View;
 use App\Http\Controllers\Controller;
 use App\Application\UseCases\Role\GetAllRoles;
 use App\Application\UseCases\Role\GetCreateInfoRole;
@@ -33,9 +34,9 @@ class RoleController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
-    public function index(Request $request, GetAllRoles $getAllRoles): Response
+    public function index(Request $request, GetAllRoles $getAllRoles): View
     {
         $roles = $getAllRoles->getAllRoles();
         $roles = $this->paginate($roles);
@@ -46,9 +47,9 @@ class RoleController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
-    public function create(GetCreateInfoRole $getCreateInfoRole): Response
+    public function create(GetCreateInfoRole $getCreateInfoRole): View
     {
         $permission = $getCreateInfoRole->getPermissions();
 
@@ -59,9 +60,9 @@ class RoleController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request, InsertRole $insertRole): Response
+    public function store(Request $request, InsertRole $insertRole): RedirectResponse
     {
         $this->validate($request, [
             'name' => 'required|unique:roles,name',
@@ -77,9 +78,9 @@ class RoleController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
-    public function show(int $id, GetRoleInfo $getRoleInfo): Response
+    public function show(int $id, GetRoleInfo $getRoleInfo): View
     {
         $result = $getRoleInfo->getRoleInfo($id);
         $role = $result['role'];
@@ -92,9 +93,9 @@ class RoleController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
-    public function edit(int $id, GetEditInfoRole $getEditInfoRole): Response
+    public function edit(int $id, GetEditInfoRole $getEditInfoRole): View
     {
         $result = $getEditInfoRole->getEditInfoRole($id);
         $role = $result['role'];
@@ -109,9 +110,9 @@ class RoleController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, int $id, UpdateRole $updateRole): Response
+    public function update(Request $request, int $id, UpdateRole $updateRole): RedirectResponse
     {
         $this->validate($request, [
             'name' => 'required',
@@ -127,9 +128,9 @@ class RoleController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(int $id, DeleteRole $deleteRole): Response
+    public function destroy(int $id, DeleteRole $deleteRole): RedirectResponse
     {
         $deleteRole->delete($id);
 

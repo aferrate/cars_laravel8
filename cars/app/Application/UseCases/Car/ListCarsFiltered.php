@@ -2,51 +2,36 @@
 namespace App\Application\UseCases\Car;
 
 use App\Domain\Criteria\Criteria;
-use App\Domain\Repository\CarRepositoryInterface;
+use App\Domain\Factory\RepoCarFactory;
 use App\Application\Query\Car\SearchEnabledCarsQuery;
-use App\Domain\Repository\CarRepositoryBackupInterface;
 
 class ListCarsFiltered
 {
     private $carRepository;
-    private $carRepositoryBackup;
 
     /**
      * GetCarInfo constructor.
-     * @param $carRepository
+     * @param $repoCarFactory
      */
-    public function __construct(CarRepositoryInterface $carRepository, CarRepositoryBackupInterface $carRepositoryBackup)
+    public function __construct(RepoCarFactory $repoCarFactory)
     {
-        $this->carRepository = $carRepository;
-        $this->carRepositoryBackup = $carRepositoryBackup;
+        $this->carRepository = $repoCarFactory->makeRepoCar();
     }
 
     /**
      * @return array
      */
-    public function getCarsFiltered(array $searchParams, bool $isAdmin, bool $backupEnabled): string
+    public function getCarsFiltered(array $searchParams, bool $isAdmin): string
     {
-        if ($backupEnabled) {
-            $criteria = new Criteria(
-                $this->carRepositoryBackup->translateFilter(
-                $searchParams['field'],
-                $searchParams['search']
-            ),
-                'desc'
-            );
+        $criteria = new Criteria(
+            $this->carRepository->translateFilter(
+            $searchParams['field'],
+            $searchParams['search']
+        ),
+            'desc'
+        );
 
-            $cars = $this->carRepositoryBackup->searchByCriteria($criteria, $isAdmin);
-        } else {
-            $criteria = new Criteria(
-                $this->carRepository->translateFilter(
-                $searchParams['field'],
-                $searchParams['search']
-            ),
-                'desc'
-            );
-
-            $cars = $this->carRepository->searchByCriteria($criteria, $isAdmin);
-        }
+        $cars = $this->carRepository->searchByCriteria($criteria, $isAdmin);
 
         return json_encode($cars);
     }

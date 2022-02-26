@@ -1,35 +1,30 @@
 <?php
 namespace App\Application\UseCases\Car;
 
-use App\Domain\Repository\CarRepositoryInterface;
-use App\Domain\Repository\CarRepositoryBackupInterface;
+use App\Domain\Factory\RepoCarFactory;
 use App\Domain\Cache\CacheInterface;
 
 class ListAllCarsEnabled
 {
     private $carRepository;
-    private $carRepositoryBackup;
     private $cache;
 
     /**
      * GetCarInfo constructor.
-     * @param $carRepository
-     * @param $carRepositoryBackup
+     * @param $repoCarFactory
      */
     public function __construct(
-        CarRepositoryInterface $carRepository,
-        CarRepositoryBackupInterface $carRepositoryBackup,
+        RepoCarFactory $repoCarFactory,
         CacheInterface $cache
     ) {
-        $this->carRepository = $carRepository;
-        $this->carRepositoryBackup = $carRepositoryBackup;
+        $this->carRepository = $repoCarFactory->makeRepoCar();
         $this->cache = $cache;
     }
 
     /**
      * @return array
      */
-    public function getCarsEnabled(bool $backupEnabled): string
+    public function getCarsEnabled(): string
     {
         $cacheCars = $this->cache->getIndexCars('cars');
 
@@ -37,7 +32,7 @@ class ListAllCarsEnabled
             return $cacheCars;
         }
 
-        $cars = ($backupEnabled) ? $this->carRepositoryBackup->findAllEnabled() : $this->carRepository->findAllEnabled();
+        $cars = $this->carRepository->findAllEnabled();
 
         $this->cache->putIndexCars($cars, 'cars');
 

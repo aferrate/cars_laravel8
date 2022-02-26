@@ -2,42 +2,34 @@
 namespace App\Application\UseCases\Car;
 
 use App\Domain\Model\Car;
-use App\Domain\Repository\CarRepositoryInterface;
-use App\Domain\Repository\CarRepositoryBackupInterface;
+use App\Domain\Factory\RepoCarFactory;
 
 class GetCarInfo
 {
     private $carRepository;
-    private $carRepositoryBackup;
 
     /**
      * GetCarInfo constructor.
-     * @param $carRepository
-     * @param $carRepositoryBackup
+     * @param $repoCarFactory
      */
-    public function __construct(CarRepositoryInterface $carRepository, CarRepositoryBackupInterface $carRepositoryBackup)
+    public function __construct(RepoCarFactory $repoCarFactory)
     {
-        $this->carRepository = $carRepository;
-        $this->carRepositoryBackup = $carRepositoryBackup;
+        $this->carRepository = $repoCarFactory->makeRepoCar();
     }
 
     /**
      * @return Car
      */
-    public function getCarDetails(string $slug, bool $backupEnabled): Car
+    public function getCarDetails(string $slug): Car
     {
-        $car = ($backupEnabled) ? $this->carRepositoryBackup->findBySlug($slug) : $this->carRepository->findBySlug($slug);
-
-        return $car;
+        return $this->carRepository->findBySlug($slug);
     }
 
     /**
      * @return Car
      */
-    public function getCarFromId(int $id, bool $backupEnabled): Car
+    public function getCarFromId(int $id): Car
     {
-        $car = ($backupEnabled) ? $this->carRepositoryBackup->findOneById($id) : $this->carRepository->findOneById($id);
-
-        return $car;
+        return $this->carRepository->findOneById($id);
     }
 }

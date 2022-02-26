@@ -3,7 +3,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Response;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 use App\Application\UseCases\Car\ListAllCars;
 use App\Application\UseCases\Car\InsertCar;
 use App\Application\UseCases\Car\UpdateCar;
@@ -27,17 +28,17 @@ class AdminCarController extends Controller
         $this->middleware('permission:admincar-delete', ['only' => ['delete']]);
     }
 
-    public function list(ListAllCars $ListAllCars): Response
+    public function list(ListAllCars $ListAllCars): View
     {
-        return view('car_admin.list', ['cars' => $ListAllCars->findAllCars(env('USE_BACKUP_REPO'))]);
+        return view('car_admin.list', ['cars' => $ListAllCars->findAllCars()]);
     }
 
-    public function create(): Response
+    public function create(): View
     {
         return view('car_admin.create');
     }
 
-    public function store(InsertCar $insertCar, Request $request): Response
+    public function store(InsertCar $insertCar, Request $request): RedirectResponse
     {
         $this->validateFormFields(request());
 
@@ -46,12 +47,12 @@ class AdminCarController extends Controller
         return redirect('admin');
     }
 
-    public function edit(GetCarInfo $getCarInfo, int $id): Response
+    public function edit(GetCarInfo $getCarInfo, int $id): View
     {
-        return view('car_admin.edit', ['car' => $getCarInfo->getCarFromId($id, env('USE_BACKUP_REPO'))]);
+        return view('car_admin.edit', ['car' => $getCarInfo->getCarFromId($id)]);
     }
 
-    public function update(UpdateCar $updateCar, Request $request, int $id): Response
+    public function update(UpdateCar $updateCar, Request $request, int $id): RedirectResponse
     {
         $this->validateFormFields(request());
 
@@ -73,7 +74,7 @@ class AdminCarController extends Controller
         $searchParams['search'] = $search;
         $searchParams['field'] = $request->post('field');
 
-        return $listCarsFiltered->getCarsFiltered($searchParams, true, env('USE_BACKUP_REPO'));
+        return $listCarsFiltered->getCarsFiltered($searchParams, true);
     }
 
     private function validateFormFields($request): void
