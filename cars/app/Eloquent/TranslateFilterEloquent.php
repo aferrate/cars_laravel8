@@ -3,7 +3,7 @@ namespace App\Eloquent;
 
 class TranslateFilterEloquent
 {
-    public static function translateFilter(string $field, string $stringToSearch)
+    public static function translateFilter(string $field, string $stringToSearch): array
     {
         $filter = [];
 

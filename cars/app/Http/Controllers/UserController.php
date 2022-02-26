@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Application\UseCases\User\GetAllUsers;
 use App\Application\UseCases\User\GetCreateInfoUser;
@@ -34,7 +35,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, GetAllUsers $getAllUsers)
+    public function index(Request $request, GetAllUsers $getAllUsers): Response
     {
         $users = $getAllUsers->getAllUsers();
         $users = $this->paginate($users);
@@ -47,7 +48,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(GetCreateInfoUser $getCreateInfoUser)
+    public function create(GetCreateInfoUser $getCreateInfoUser): Response
     {
         $roles = $getCreateInfoUser->getAllRoleNames();
 
@@ -60,7 +61,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, InsertUser $insertUser)
+    public function store(Request $request, InsertUser $insertUser): Response
     {
         $this->validate($request, [
             'name' => 'required',
@@ -81,7 +82,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(int $id, GetUserInfo $getUserInfo)
+    public function show(int $id, GetUserInfo $getUserInfo): Response
     {
         $user = $getUserInfo->getUserInfo($id);
 
@@ -94,7 +95,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(int $id, GetEditInfoUser $getEditInfoUser)
+    public function edit(int $id, GetEditInfoUser $getEditInfoUser): Response
     {
         $result = $getEditInfoUser->getEditInfoUser($id);
         $user = $result['user'];
@@ -111,7 +112,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, int $id, UpdateUser $updateUser)
+    public function update(Request $request, int $id, UpdateUser $updateUser): Response
     {
         $this->validate($request, [
             'name' => 'required',
@@ -131,7 +132,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(int $id, DeleteUser $deleteUser)
+    public function destroy(int $id, DeleteUser $deleteUser): Response
     {
         $deleteUser->delete($id);
 
@@ -143,7 +144,7 @@ class UserController extends Controller
      *
      * @var array
      */
-    private function paginate($items, $perPage = 10, $page = null, $options = ['path' => 'users'])
+    private function paginate($items, $perPage = 10, $page = null, $options = ['path' => 'users']): LengthAwarePaginator
     {
         $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
         $items = $items instanceof Collection ? $items : Collection::make($items);

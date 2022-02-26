@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Application\UseCases\Role\GetAllRoles;
 use App\Application\UseCases\Role\GetCreateInfoRole;
@@ -34,7 +35,7 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, GetAllRoles $getAllRoles)
+    public function index(Request $request, GetAllRoles $getAllRoles): Response
     {
         $roles = $getAllRoles->getAllRoles();
         $roles = $this->paginate($roles);
@@ -47,7 +48,7 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(GetCreateInfoRole $getCreateInfoRole)
+    public function create(GetCreateInfoRole $getCreateInfoRole): Response
     {
         $permission = $getCreateInfoRole->getPermissions();
 
@@ -60,7 +61,7 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, InsertRole $insertRole)
+    public function store(Request $request, InsertRole $insertRole): Response
     {
         $this->validate($request, [
             'name' => 'required|unique:roles,name',
@@ -78,7 +79,7 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(int $id, GetRoleInfo $getRoleInfo)
+    public function show(int $id, GetRoleInfo $getRoleInfo): Response
     {
         $result = $getRoleInfo->getRoleInfo($id);
         $role = $result['role'];
@@ -93,7 +94,7 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(int $id, GetEditInfoRole $getEditInfoRole)
+    public function edit(int $id, GetEditInfoRole $getEditInfoRole): Response
     {
         $result = $getEditInfoRole->getEditInfoRole($id);
         $role = $result['role'];
@@ -110,7 +111,7 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, int $id, UpdateRole $updateRole)
+    public function update(Request $request, int $id, UpdateRole $updateRole): Response
     {
         $this->validate($request, [
             'name' => 'required',
@@ -128,7 +129,7 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(int $id, DeleteRole $deleteRole)
+    public function destroy(int $id, DeleteRole $deleteRole): Response
     {
         $deleteRole->delete($id);
 
@@ -140,7 +141,7 @@ class RoleController extends Controller
      *
      * @var array
      */
-    private function paginate($items, $perPage = 10, $page = null, $options = ['path' => 'roles'])
+    private function paginate($items, $perPage = 10, $page = null, $options = ['path' => 'roles']): LengthAwarePaginator
     {
         $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
         $items = $items instanceof Collection ? $items : Collection::make($items);

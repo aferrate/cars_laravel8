@@ -157,7 +157,7 @@ class EloquentCarRepository implements CarRepositoryInterface
         return $car;
     }
 
-    public function translateFilter(string $field, string $stringToSearch)
+    public function translateFilter(string $field, string $stringToSearch): array
     {
         return TranslateFilterEloquent::translateFilter($field, $stringToSearch);
     }

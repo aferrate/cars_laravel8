@@ -3,7 +3,7 @@ namespace App\ElasticSearch;
 
 class TranslateFilterElasticSearch
 {
-    public static function translateFilter(string $field, string $stringToSearch)
+    public static function translateFilter(string $field, string $stringToSearch): array
     {
         switch ($field) {
             case 'mark':

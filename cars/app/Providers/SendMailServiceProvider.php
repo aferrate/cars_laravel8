@@ -10,7 +10,7 @@ class SendMailServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->app->bind(
             'App\Domain\Mail\SendMailInterface',
@@ -23,7 +23,7 @@ class SendMailServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         //
     }

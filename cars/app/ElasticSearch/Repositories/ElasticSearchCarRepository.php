@@ -17,7 +17,7 @@ class ElasticSearchCarRepository implements CarRepositoryBackupInterface
         $this->client = $client;
     }
 
-    public function getClient()
+    public function getClient(): Client
     {
         return $this->client;
     }
@@ -309,7 +309,7 @@ class ElasticSearchCarRepository implements CarRepositoryBackupInterface
         return $car;
     }
 
-    public function translateFilter(string $field, string $stringToSearch)
+    public function translateFilter(string $field, string $stringToSearch): array
     {
         return TranslateFilterElasticSearch::translateFilter($field, $stringToSearch);
     }

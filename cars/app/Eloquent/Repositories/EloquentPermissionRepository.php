@@ -30,7 +30,7 @@ class EloquentPermissionRepository implements PermissionRepositoryInterface
             ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')->all();
     }
 
-    private function returnPermissionsDomain(Collection $permissionsEntity)
+    private function returnPermissionsDomain(Collection $permissionsEntity): array
     {
         $permissions = [];
 

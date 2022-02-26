@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Response;
 use App\Application\UseCases\Car\ListAllCars;
 use App\Application\UseCases\Car\InsertCar;
 use App\Application\UseCases\Car\UpdateCar;
@@ -26,17 +27,17 @@ class AdminCarController extends Controller
         $this->middleware('permission:admincar-delete', ['only' => ['delete']]);
     }
 
-    public function list(ListAllCars $ListAllCars)
+    public function list(ListAllCars $ListAllCars): Response
     {
         return view('car_admin.list', ['cars' => $ListAllCars->findAllCars(env('USE_BACKUP_REPO'))]);
     }
 
-    public function create()
+    public function create(): Response
     {
         return view('car_admin.create');
     }
 
-    public function store(InsertCar $insertCar, Request $request)
+    public function store(InsertCar $insertCar, Request $request): Response
     {
         $this->validateFormFields(request());
 
@@ -45,12 +46,12 @@ class AdminCarController extends Controller
         return redirect('admin');
     }
 
-    public function edit(GetCarInfo $getCarInfo, int $id)
+    public function edit(GetCarInfo $getCarInfo, int $id): Response
     {
         return view('car_admin.edit', ['car' => $getCarInfo->getCarFromId($id, env('USE_BACKUP_REPO'))]);
     }
 
-    public function update(UpdateCar $updateCar, Request $request, int $id)
+    public function update(UpdateCar $updateCar, Request $request, int $id): Response
     {
         $this->validateFormFields(request());
 
@@ -59,12 +60,12 @@ class AdminCarController extends Controller
         return redirect('admin');
     }
 
-    public function delete(DeleteCar $deleteCar, Request $request)
+    public function delete(DeleteCar $deleteCar, Request $request): bool
     {
         $deleteCar->delete(request('carid'), request('imageName'));
     }
 
-    public function searchCars(ListCarsFiltered $listCarsFiltered, Request $request)
+    public function searchCars(ListCarsFiltered $listCarsFiltered, Request $request): string
     {
         $search = ($request->post('search') != '') ? $request->post('search') : '';
 
@@ -75,7 +76,7 @@ class AdminCarController extends Controller
         return $listCarsFiltered->getCarsFiltered($searchParams, true, env('USE_BACKUP_REPO'));
     }
 
-    private function validateFormFields($request)
+    private function validateFormFields($request): void
     {
         $request->validate([
             'mark' => 'required',
