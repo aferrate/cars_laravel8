@@ -1,48 +1,64 @@
-# Sample project with Laravel 8 and Docker
+# Sample project with Laravel 8 PHP 8 and Docker
 ### Install
 
 run docker:
 ```
- cd laradock
+cd laradock
 ```
 ```
- docker-compose up -d nginx mysql phpmyadmin elasticsearch mailhog rabbitmq redis
+docker-compose up -d nginx mysql phpmyadmin elasticsearch mailhog rabbitmq redis
 ```
 if elasticsearch container don't start run this commands:
 - windows:
 ```
- wsl -d docker-desktop
- sysctl -w vm.max_map_count=262144
+wsl -d docker-desktop
+```
+```
+sysctl -w vm.max_map_count=262144
 ```
 - linux:
 ```
- sysctl -w vm.max_map_count=262144
+sysctl -w vm.max_map_count=262144
 ```
 install dependencies: (if npm install doesn't work try to install outside docker container)
 ```
- docker-compose exec workspace bash
- composer install
- npm install --no-bin-links
+docker-compose exec workspace bash
+```
+```
+composer install
+```
+```
+npm install --no-bin-links
 ```
 
 create database:
 ```
- docker-compose exec workspace bash
- php artisan db:create laravel_cars
+docker-compose exec workspace bash
+```
+```
+php artisan db:create laravel_cars
 ```
 
 add elasticsearch index cars:
 ```
- docker-compose exec workspace bash
- php artisan elasticsearchindexadd:cars
+docker-compose exec workspace bash
+```
+```
+php artisan elasticsearchindexadd:cars
 ```
 
 run migrations and seeders:
 ```
- docker-compose exec workspace bash
- php artisan migrate
- php artisan db:seed --class=PermissionTableSeeder
- php artisan db:seed --class=CreateAdminUserSeeder
+docker-compose exec workspace bash
+```
+```
+php artisan migrate
+```
+```
+php artisan db:seed --class=PermissionTableSeeder
+```
+```
+php artisan db:seed --class=CreateAdminUserSeeder
 ```
 
 
@@ -59,9 +75,9 @@ access phpmyadmin:
 
 credentials:
 ```
- server mysql
- user root
- password root
+server mysql
+user root
+password root
 ```
 
 access elasticsearch index cars:
@@ -75,8 +91,8 @@ access rabbitmq:
 
 credentials:
 ```
- user guest
- password guest
+user guest
+password guest
 ```
 
 call localhost in your browser:
@@ -86,15 +102,17 @@ call localhost in your browser:
 ### Run tests
 
 ```
- docker-compose exec workspace bash
- phpunit
+docker-compose exec workspace bash
+```
+```
+phpunit
 ```
 
 
 ### Access container
 get into the container:
 ```
- docker-compose exec workspace bash
+docker-compose exec workspace bash
 ```
 
 
@@ -109,6 +127,8 @@ test1@test.com
 ### Delete elasticsearch index cars
 
 ```
- docker-compose exec workspace bash
- php artisan elasticsearchindexdelete:cars
+docker-compose exec workspace bash
+```
+```
+php artisan elasticsearchindexdelete:cars
 ```
