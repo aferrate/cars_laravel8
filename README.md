@@ -91,8 +91,8 @@ access rabbitmq:
 
 credentials:
 ```
-user guest
-password guest
+guest
+guest
 ```
 
 call localhost in your browser:

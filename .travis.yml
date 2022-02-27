@@ -1,15 +1,12 @@
 language: php
 
-dist: bionic
+services:
+  - docker
 
-php:
-  - 7.3
-
-before_script:
-  - cd laradock
-  - docker-compose up -d nginx mysql
-  - docker-compose exec workspace bash
-  - phpunit
+before_install:
+- cd laradock
+- docker-compose up -d nginx mysql
+- docker-compose exec workspace bash
 
 script:
-  - vendor/bin/phpunit
+- vendor/bin/phpunit
