@@ -1,12 +1,15 @@
 language: php
 
+php:
+  - 8.0
+
 services:
   - docker
 
 before_install:
-- cd laradock
-- docker-compose up -d nginx mysql
-- docker-compose exec workspace bash
+  - cd laradock
+  - docker-compose up -d nginx mysql
+  - docker-compose exec workspace bash
+  - composer install
 
-script:
-- vendor/bin/phpunit
+script: ./vendor/bin/phpunit
