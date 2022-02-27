@@ -10,6 +10,8 @@ before_install:
   - cd laradock
   - docker-compose up -d nginx mysql
   - docker-compose exec workspace bash
-  - composer install
+  
 
-script: ./vendor/bin/phpunit
+script:
+  - composer install
+  - ./vendor/bin/phpunit
