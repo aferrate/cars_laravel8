@@ -9,7 +9,7 @@ services:
 before_install:
   - cd laradock
   - docker-compose up -d nginx mysql
-  - docker-compose --file ./laradock/docker-compose.yml exec workspace composer install
+  - docker-compose --file ./docker-compose.yml exec workspace composer install
 
 script:
   - docker-compose --file ./laradock/docker-compose.yml exec workspace ./vendor/bin/phpunit
