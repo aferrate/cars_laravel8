@@ -12,4 +12,4 @@ before_install:
   - docker-compose --file ./docker-compose.yml exec workspace composer install
 
 script:
-  - docker-compose --file ./laradock/docker-compose.yml exec workspace ./vendor/bin/phpunit
+  - docker-compose --file ./docker-compose.yml exec workspace ./vendor/bin/phpunit
