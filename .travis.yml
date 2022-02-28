@@ -8,8 +8,14 @@ services:
 
 before_install:
   - cd laradock
-  - docker-compose up -d nginx mysql
+  - docker-compose up -d nginx mysql elasticsearch
   - docker-compose --file ./docker-compose.yml exec workspace composer install
+  - docker-compose --file ./docker-compose.yml exec workspace npm install --no-bin-links
+  - docker-compose --file ./docker-compose.yml exec workspace php artisan db:create laravel_cars
+  - docker-compose --file ./docker-compose.yml exec workspace php artisan elasticsearchindexadd:cars
+  - docker-compose --file ./docker-compose.yml exec workspace php artisan migrate
+  - docker-compose --file ./docker-compose.yml exec workspace php artisan db:seed --class=PermissionTableSeeder
+  - docker-compose --file ./docker-compose.yml exec workspace php artisan db:seed --class=CreateAdminUserSeeder
 
 script:
   - docker-compose --file ./docker-compose.yml exec workspace ./vendor/bin/phpunit
