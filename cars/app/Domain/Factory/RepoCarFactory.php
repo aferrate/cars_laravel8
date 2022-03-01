@@ -10,7 +10,7 @@ class RepoCarFactory
     private $carRepositoryBackup;
 
     /**
-     * GetCarInfo constructor.
+     * RepoCarFactory constructor.
      * @param $carRepository
      * @param $carRepositoryBackup
      */

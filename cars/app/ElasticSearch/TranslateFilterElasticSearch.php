@@ -7,11 +7,7 @@ class TranslateFilterElasticSearch
     {
         switch ($field) {
             case 'mark':
-                if ($stringToSearch !== '') {
-                    $search = '*' . $stringToSearch . '*';
-                } else {
-                    $search = '*';
-                }
+                $search = TranslateFilterElasticSearch::formatSearch($stringToSearch);
 
                 $filter2 = [
                     'wildcard' => [
@@ -21,11 +17,7 @@ class TranslateFilterElasticSearch
 
                 break;
             case 'model':
-                if ($stringToSearch !== '') {
-                    $search = '*' . $stringToSearch . '*';
-                } else {
-                    $search = '*';
-                }
+                $search = TranslateFilterElasticSearch::formatSearch($stringToSearch);
 
                 $filter2 = [
                     'wildcard' => [
@@ -61,5 +53,18 @@ class TranslateFilterElasticSearch
         ];
 
         return $filter;
+    }
+
+    private static function formatSearch(string $stringToSearch): string
+    {
+        $search = '';
+
+        if ($stringToSearch !== '') {
+            $search = '*' . $stringToSearch . '*';
+        } else {
+            $search = '*';
+        }
+
+        return $search;
     }
 }

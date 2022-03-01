@@ -8,7 +8,7 @@ class ListAllCars
     private $carRepository;
 
     /**
-     * GetCarInfo constructor.
+     * ListAllCars constructor.
      * @param $repoCarFactory
      */
     public function __construct(RepoCarFactory $repoCarFactory)

@@ -3,6 +3,7 @@ namespace App\Application\UseCases\Car;
 
 use App\Domain\Model\Car;
 use App\Domain\Factory\RepoCarFactory;
+use App\Domain\Cache\CacheInterface;
 
 class GetCarInfo
 {
@@ -11,10 +12,12 @@ class GetCarInfo
     /**
      * GetCarInfo constructor.
      * @param $repoCarFactory
+     * @param $cache
      */
-    public function __construct(RepoCarFactory $repoCarFactory)
+    public function __construct(RepoCarFactory $repoCarFactory, CacheInterface $cache)
     {
         $this->carRepository = $repoCarFactory->makeRepoCar();
+        $this->cache = $cache;
     }
 
     /**
@@ -22,7 +25,18 @@ class GetCarInfo
      */
     public function getCarDetails(string $slug): Car
     {
-        return $this->carRepository->findBySlug($slug);
+        /*$cacheCar = $this->cache->getIndexCar($slug);
+
+        if (!empty($cacheCar)) {
+            print_r($cacheCar);die;
+            return $cacheCar;
+        }*/
+
+        $car = $this->carRepository->findBySlug($slug);
+
+        //$this->cache->putIndexCar($car, $slug);
+
+        return $car;
     }
 
     /**

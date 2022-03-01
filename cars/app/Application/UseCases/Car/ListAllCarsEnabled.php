@@ -10,15 +10,12 @@ class ListAllCarsEnabled
     private $cache;
 
     /**
-     * GetCarInfo constructor.
+     * ListAllCarsEnabled constructor.
      * @param $repoCarFactory
      */
-    public function __construct(
-        RepoCarFactory $repoCarFactory,
-        CacheInterface $cache
-    ) {
+    public function __construct(RepoCarFactory $repoCarFactory)
+    {
         $this->carRepository = $repoCarFactory->makeRepoCar();
-        $this->cache = $cache;
     }
 
     /**
@@ -26,15 +23,7 @@ class ListAllCarsEnabled
      */
     public function getCarsEnabled(): string
     {
-        $cacheCars = $this->cache->getIndexCars('cars');
-
-        if (!empty($cacheCars)) {
-            return $cacheCars;
-        }
-
         $cars = $this->carRepository->findAllEnabled();
-
-        $this->cache->putIndexCars($cars, 'cars');
 
         return json_encode($cars);
     }

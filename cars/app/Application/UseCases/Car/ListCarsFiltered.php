@@ -10,7 +10,7 @@ class ListCarsFiltered
     private $carRepository;
 
     /**
-     * GetCarInfo constructor.
+     * ListCarsFiltered constructor.
      * @param $repoCarFactory
      */
     public function __construct(RepoCarFactory $repoCarFactory)
