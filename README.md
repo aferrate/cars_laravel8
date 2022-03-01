@@ -1,7 +1,8 @@
 # Sample project with Laravel 8 PHP 8 and Docker
-### Install
 
 [![Build Status](https://app.travis-ci.com/aferrate/cars_laravel8.svg?branch=main)](https://app.travis-ci.com/aferrate/cars_laravel8)
+
+### Install
 
 run docker:
 ```
