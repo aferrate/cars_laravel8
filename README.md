@@ -11,7 +11,7 @@ cd laradock
 ```
 docker-compose up -d nginx mysql phpmyadmin elasticsearch mailhog rabbitmq redis
 ```
-if elasticsearch container don't start run this commands:
+if elasticsearch container doesn't start run this commands:
 - windows:
 ```
 wsl -d docker-desktop
