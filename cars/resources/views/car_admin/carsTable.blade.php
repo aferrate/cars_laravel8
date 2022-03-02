@@ -106,12 +106,12 @@
                         <td>${myList[i].model}</td>
                         <td>${myList[i].year}</td>
                         <td>${myList[i].enabled}</td>
-                        <td>${myList[i].updated_at}</td>
+                        <td>${myList[i].updatedAt}</td>
                         <td>${myList[i].country}</td>
                         <td>${myList[i].city}</td>
-                        <td><img class="car-img" src="/uploads/car_image/${myList[i].image_filename}"></td>
+                        <td><img class="car-img" src="/uploads/car_image/${myList[i].imageFilename}"></td>
                         <td><a href="/admin/edit/${myList[i].id}"><button type="button" class="btn btn-info btn-sm">Edit</button></a></td>
-                        <td><button type="button" data-car-id="${myList[i].id}" data-car-imageName="${myList[i].image_filename}" class="btn btn-info btn-sm delete_car" data-toggle="modal" data-target="#myModal">Delete</button></td>
+                        <td><button type="button" data-car-id="${myList[i].id}" data-car-imageName="${myList[i].imageFilename}" class="btn btn-info btn-sm delete_car" data-toggle="modal" data-target="#myModal">Delete</button></td>
                         `
                 table.append(row)
             }

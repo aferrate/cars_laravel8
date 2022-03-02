@@ -5,7 +5,7 @@ use App\Domain\Model\Car;
 
 interface CacheInterface
 {
-    public function putIndexCar(Car $car, string $key): void;
+    public function putIndexCar(array $car, string $key): void;
 
     public function getIndexCar(string $key): string;
 }

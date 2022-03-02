@@ -25,16 +25,13 @@ class GetCarInfo
      */
     public function getCarDetails(string $slug): Car
     {
-        /*$cacheCar = $this->cache->getIndexCar($slug);
+        $cacheCar = $this->cache->getIndexCar($slug);
 
         if (!empty($cacheCar)) {
-            print_r($cacheCar);die;
-            return $cacheCar;
-        }*/
+            return Car::returnCarDomain(json_decode($cacheCar, true));
+        }
 
         $car = $this->carRepository->findBySlug($slug);
-
-        //$this->cache->putIndexCar($car, $slug);
 
         return $car;
     }

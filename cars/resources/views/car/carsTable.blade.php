@@ -105,8 +105,8 @@
                         <td>${myList[i].mark}</td>
                         <td>${myList[i].model}</td>
                         <td>${myList[i].year}</td>
-                        <td>${myList[i].updated_at}</td>
-                        <td><img class="car-img" src="/uploads/car_image/${myList[i].image_filename}"></td>
+                        <td>${myList[i].updatedAt}</td>
+                        <td><img class="car-img" src="/uploads/car_image/${myList[i].imageFilename}"></td>
                         `
                 table.append(row)
             }

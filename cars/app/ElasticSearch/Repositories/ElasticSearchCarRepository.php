@@ -111,7 +111,7 @@ class ElasticSearchCarRepository implements CarRepositoryBackupInterface
             return $car;
         }
 
-        $car = $this->returnCarDomain($carElastic['hits']['hits'][0]['_source']);
+        $car = Car::returnCarDomain($carElastic['hits']['hits'][0]['_source']);
 
         return $car;
     }
@@ -138,7 +138,7 @@ class ElasticSearchCarRepository implements CarRepositoryBackupInterface
             return $car;
         }
 
-        $car = $this->returnCarDomain($carElastic['hits']['hits'][0]['_source']);
+        $car = Car::returnCarDomain($carElastic['hits']['hits'][0]['_source']);
 
         return $car;
     }
@@ -150,18 +150,18 @@ class ElasticSearchCarRepository implements CarRepositoryBackupInterface
             'id' => $car->getId(),
             'body' => [
                 'id' => $car->getId(),
-                'author_id' => $car->getAuthorId(),
+                'authorId' => $car->getAuthorId(),
                 'mark' => $car->getMark(),
                 'model' => $car->getModel(),
                 'year' => $car->getYear(),
                 'description' => $car->getDescription(),
                 'slug' => $car->getSlug(),
                 'enabled' => $car->getEnabled(),
-                'created_at' => $car->getCreatedAt(),
-                'updated_at' => $car->getUpdatedAt(),
+                'createdAt' => $car->getCreatedAt(),
+                'updatedAt' => $car->getUpdatedAt(),
                 'country' => $car->getCountry(),
                 'city' => $car->getCity(),
-                'image_filename' => $car->getImageFilename()
+                'imageFilename' => $car->getImageFilename()
             ]
         ];
 
@@ -176,16 +176,16 @@ class ElasticSearchCarRepository implements CarRepositoryBackupInterface
             'body' => [
                 'doc' => [
                     'id' => $car->getId(),
-                    'author_id' => $car->getAuthorId(),
+                    'authorId' => $car->getAuthorId(),
                     'mark' => $car->getMark(),
                     'model' => $car->getModel(),
                     'year' => $car->getYear(),
                     'description' => $car->getDescription(),
                     'enabled' => $car->getEnabled(),
-                    'updated_at' => $car->getUpdatedAt(),
+                    'updatedAt' => $car->getUpdatedAt(),
                     'country' => $car->getCountry(),
                     'city' => $car->getCity(),
-                    'image_filename' => $car->getImageFilename()
+                    'imageFilename' => $car->getImageFilename()
                 ]
             ]
         ];
@@ -221,7 +221,7 @@ class ElasticSearchCarRepository implements CarRepositoryBackupInterface
                             'type' => 'integer',
                             'index' => 'true'
                         ],
-                        'author_id' => [
+                        'authorId' => [
                             'type' => 'integer',
                             'index' => 'true'
                         ],
@@ -249,12 +249,12 @@ class ElasticSearchCarRepository implements CarRepositoryBackupInterface
                             'type' => 'boolean',
                             'index' => 'true',
                         ],
-                        'created_at' => [
+                        'createdAt' => [
                             'type' => 'date',
                             'format' => 'yyyy-MM-dd HH:mm:ss',
                             'index' => 'true',
                         ],
-                        'updated_at' => [
+                        'updatedAt' => [
                             'type' => 'date',
                             'format' => 'yyyy-MM-dd HH:mm:ss',
                             'index' => 'true',
@@ -267,7 +267,7 @@ class ElasticSearchCarRepository implements CarRepositoryBackupInterface
                             'type' => 'text',
                             'index' => 'true',
                         ],
-                        'image_filename' => [
+                        'imageFilename' => [
                             'type' => 'text',
                             'index' => 'true',
                         ]
@@ -286,27 +286,6 @@ class ElasticSearchCarRepository implements CarRepositoryBackupInterface
         ];
 
         $this->getClient()->indices()->delete($deleteParams);
-    }
-
-    private function returnCarDomain(array $carElastic): Car
-    {
-        $car = new Car();
-
-        $car->setId($carElastic['id']);
-        $car->setMark($carElastic['mark']);
-        $car->setModel($carElastic['model']);
-        $car->setYear($carElastic['year']);
-        $car->setDescription($carElastic['description']);
-        $car->setSlug($carElastic['slug']);
-        $car->setEnabled($carElastic['enabled']);
-        $car->setCountry($carElastic['country']);
-        $car->setCity($carElastic['city']);
-        $car->setImageFilename($carElastic['image_filename']);
-        $car->setCreatedAt($carElastic['created_at']);
-        $car->setUpdatedAt($carElastic['updated_at']);
-        $car->setAuthorId($carElastic['author_id']);
-
-        return $car;
     }
 
     public function translateFilter(string $field, string $stringToSearch): array

@@ -7,12 +7,16 @@ use DateTime;
 use App\Domain\Repository\CarRepositoryBackupInterface;
 use App\Domain\Photo\PhotoManagerInterface;
 use App\Domain\Events\CarCreatedEvent;
+use App\Domain\Cache\CacheInterface;
+use App\Application\UseCases\Car\AbstractCarUseCase;
 
-class InsertCar
+class InsertCar extends AbstractCarUseCase
 {
     private $carRepository;
     private $carRepositoryBackup;
     private $photoManager;
+    private $carCreatedEvent;
+    private $cache;
 
     /**
      * InsertCar constructor.
@@ -20,17 +24,20 @@ class InsertCar
      * @param $carRepositoryBackup
      * @param $photoManager
      * @param $carCreatedEvent
+     * @param $cache
      */
     public function __construct(
         CarRepositoryInterface $carRepository,
         CarRepositoryBackupInterface $carRepositoryBackup,
         PhotoManagerInterface $photoManager,
-        CarCreatedEvent $carCreatedEvent
+        CarCreatedEvent $carCreatedEvent,
+        CacheInterface $cache
     ) {
         $this->carRepository = $carRepository;
         $this->carRepositoryBackup = $carRepositoryBackup;
         $this->photoManager = $photoManager;
         $this->carCreatedEvent = $carCreatedEvent;
+        $this->cache = $cache;
     }
 
     /**
@@ -38,23 +45,17 @@ class InsertCar
      */
     public function insert(array $input, int $authorId): bool
     {
-        $enabled = (isset($input['enabled'])) ? true : false;
-
-        $car = new Car();
-        $car->setMark($input['mark']);
-        $car->setModel($input['model']);
-        $car->setYear($input['year']);
-        $car->setDescription($input['description']);
-        $car->setCountry($input['country']);
-        $car->setCity($input['city']);
-        $car->setEnabled($enabled);
-        $car->setAuthorId($authorId);
-        $car->setImageFilename($this->managePhoto($input));
+        $car = $this->returnCarObject($input, $authorId);
+        $car->setImageFilename($this->managePhoto($input, $this->photoManager));
         $car->setCreatedAt((new DateTime('NOW'))->format('Y-m-d H:i:s'));
         $car->setUpdatedAt((new DateTime('NOW'))->format('Y-m-d H:i:s'));
         $car->setSlug(uniqid());
 
+        $this->carRepository->addObserver($this->cache);
+
         $id = $this->carRepository->save($car);
+
+        $this->carRepository->removeObserver($this->cache);
 
         $car->setId($id);
 
@@ -62,16 +63,5 @@ class InsertCar
         $this->carCreatedEvent->raise($id);
 
         return true;
-    }
-
-    private function managePhoto(array $input): string
-    {
-        $fileName = 'no-photo.jpg';
-
-        if (isset($input['imageFile'])) {
-            $fileName = $this->photoManager->uploadCarImage(['image' => $input['imageFile']]);
-        }
-
-        return $fileName;
     }
 }

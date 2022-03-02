@@ -1,7 +1,9 @@
 <?php
 namespace App\Domain\Model;
 
-final class Car
+use JsonSerializable;
+
+final class Car implements JsonSerializable
 {
     private $id;
     private $mark;
@@ -223,5 +225,45 @@ final class Car
     public function setAuthorId(int $authorId): void
     {
         $this->authorId = $authorId;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'mark' => $this->mark,
+            'model' => $this->model,
+            'year' => $this->year,
+            'description' => $this->description,
+            'slug' => $this->slug,
+            'enabled' => $this->enabled,
+            'createdAt' => $this->createdAt,
+            'updatedAt' => $this->updatedAt,
+            'country' => $this->country,
+            'city' => $this->city,
+            'imageFilename' => $this->imageFilename,
+            'authorId' => $this->authorId,
+        ];
+    }
+
+    public static function returnCarDomain(array $carArr): Car
+    {
+        $car = new Car();
+
+        $car->setId($carArr['id']);
+        $car->setMark($carArr['mark']);
+        $car->setModel($carArr['model']);
+        $car->setYear($carArr['year']);
+        $car->setDescription($carArr['description']);
+        $car->setSlug($carArr['slug']);
+        $car->setEnabled($carArr['enabled']);
+        $car->setCountry($carArr['country']);
+        $car->setCity($carArr['city']);
+        $car->setImageFilename($carArr['imageFilename']);
+        $car->setCreatedAt($carArr['createdAt']);
+        $car->setUpdatedAt($carArr['updatedAt']);
+        $car->setAuthorId($carArr['authorId']);
+
+        return $car;
     }
 }

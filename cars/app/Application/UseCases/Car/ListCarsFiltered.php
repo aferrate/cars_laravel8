@@ -25,9 +25,9 @@ class ListCarsFiltered
     {
         $criteria = new Criteria(
             $this->carRepository->translateFilter(
-            $searchParams['field'],
-            $searchParams['search']
-        ),
+                $searchParams['field'],
+                $searchParams['search']
+            ),
             'desc'
         );
 

@@ -64,6 +64,8 @@ class AdminCarController extends Controller
     public function delete(DeleteCar $deleteCar, Request $request): bool
     {
         $deleteCar->delete(request('carid'), request('imageName'));
+
+        return true;
     }
 
     public function searchCars(ListCarsFiltered $listCarsFiltered, Request $request): string

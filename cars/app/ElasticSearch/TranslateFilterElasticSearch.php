@@ -11,7 +11,7 @@ class TranslateFilterElasticSearch
 
                 $filter2 = [
                     'wildcard' => [
-                        'model' => ['wildcard' => $search]
+                        'mark' => ['wildcard' => $search]
                     ]
                 ];
 

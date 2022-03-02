@@ -5,9 +5,10 @@ use App\Domain\Repository\CarRepositoryInterface;
 use App\Models\Car as CarEntity;
 use App\Domain\Model\Car;
 use App\Domain\Criteria\Criteria;
+use App\Domain\Observer\Observable;
 use App\Eloquent\TranslateFilterEloquent;
 
-class EloquentCarRepository implements CarRepositoryInterface
+class EloquentCarRepository extends Observable implements CarRepositoryInterface
 {
     private $carModel;
 
@@ -77,7 +78,7 @@ class EloquentCarRepository implements CarRepositoryInterface
             return $car;
         }
 
-        return $this->returnCarDomain($carModel);
+        return $this->returnCarDomainFromEntity($carModel);
     }
 
     public function findBySlug(string $slug): Car
@@ -91,7 +92,7 @@ class EloquentCarRepository implements CarRepositoryInterface
             return $car;
         }
 
-        return $this->returnCarDomain($carModel);
+        return $this->returnCarDomainFromEntity($carModel);
     }
 
     public function save(Car $car): int
@@ -111,6 +112,10 @@ class EloquentCarRepository implements CarRepositoryInterface
             'author_id' => $car->getAuthorId(),
         ])->id;
 
+        $car->setId($id);
+
+        self::notifyObserver(['type' => 'insert', 'car' => $car]);
+
         return $id;
     }
 
@@ -128,14 +133,21 @@ class EloquentCarRepository implements CarRepositoryInterface
         $carEntity->updated_at = $car->getUpdatedAt();
         $carEntity->author_id = $car->getAuthorId();
         $carEntity->save();
+        $car->setSlug($carEntity->slug);
+
+        self::notifyObserver(['type' => 'update', 'car' => $car]);
     }
 
     public function delete(int $carId): void
     {
+        //print_r($this->findOneById($carId)->getSlug());die;
+        $slug = $this->findOneById($carId)->getSlug();
         $this->carModel->destroy($carId);
+
+        self::notifyObserver(['type' => 'delete', 'car' => $slug]);
     }
 
-    private function returnCarDomain(CarEntity $carModel): Car
+    private function returnCarDomainFromEntity(CarEntity $carModel): Car
     {
         $car = new Car();
 
